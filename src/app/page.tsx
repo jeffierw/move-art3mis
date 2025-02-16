@@ -363,12 +363,6 @@ function App() {
   const handleMintClick = async () => {
     try {
       setLoading(true);
-      const mockArgs: MintCardArguments = {
-        question: "这是一个测试问题",
-        reading: "这是一个测试解读",
-        card: "测试卡片",
-        position: "测试位置",
-      };
       const args: MintCardArguments = {
         question: inputValue,
         reading: choseContent,
@@ -377,7 +371,7 @@ function App() {
       };
       const response = await signAndSubmitTransaction({
         sender: account.address,
-        ...mintCard(mockArgs),
+        ...mintCard(args),
       });
       // const response = await onSubmitMintTransaction(args);
       const res = await aptosClient().waitForTransaction({
@@ -392,6 +386,7 @@ function App() {
         setMintSuccess(true);
       }, 2000);
     } catch (error) {
+      console.log("error", error);
       toast({
         title: "Error",
         description: "Network error, please try it later~",
